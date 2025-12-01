@@ -4,7 +4,8 @@
 {% block content %}
 <div class="card">
   <h3>Alta de participantes</h3>
-  <form method="post" action="{{ url_for('admin_add', key=request.args.get('key')) }}">
+  <form method="post"
+        action="{{ url_for('admin_add', key=ADMIN_KEY) }}">
     <label>Nombre<br><input type="text" name="name" required></label><br><br>
     <label>Email<br><input type="email" name="email" required></label><br><br>
     <button class="btn btn-primary" type="submit">Agregar</button>
