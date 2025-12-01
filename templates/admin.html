@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+{% block title %}Admin Amigo Invisible{% endblock %}
+
+{% block content %}
+
+<div class="card">
+  <h3>Alta de participantes</h3>
+
+  <form method="post" action="{{ url_for('admin_add') }}">
+    <input type="hidden" name="key" value="{{ ADMIN_KEY }}">
+
+    <label>
+      Nombre<br>
+      <input type="text" name="name" required>
+    </label><br><br>
+
+    <label>
+      Email<br>
+      <input type="email" name="email" required>
+    </label><br><br>
+
+    <button class="btn btn-primary" type="submit">
+      Agregar
+    </button>
+  </form>
+</div>
+
+<div class="card">
+  <h3>Participantes</h3>
+
+  {% if participants %}
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Nombre</th>
+          <th>Email</th>
+          <th>Asignado a</th>
+          <th>Visto</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+
+      <tbody>
+      {% for p in participants %}
+        {% set a = assign_map.get(p.id) %}
+        <tr>
+          <td>{{ p.id }}</td>
+          <td>{{ p.name }}</td>
+          <td>{{ p.email }}</td>
+
+          <td>
+            {% if a and a.receiver %}
+              {{ a.receiver.name }}
+            {% else %}
+              -
+            {% endif %}
+          </td>
+
+          <td>
+            {% if a %}
+              {% if a.viewed %}
+                ✅ {{ a.first_seen_at }}
+              {% else %}
+                ❌
+              {% endif %}
+            {% else %}
+              -
+            {% endif %}
+          </td>
+
+          <td>
+            <form method="post"
+                  action="{{ url_for('admin_delete', pid=p.id) }}"
+                  style="display:inline;">
+
+              <input type="hidden" name="key" value="{{ ADMIN_KEY }}">
+
+              <button class="btn btn-danger"
+                      type="submit"
+                      onclick="return confirm('¿Eliminar participante?');">
+                Eliminar
+              </button>
+            </form>
+          </td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>No hay participantes cargados.</p>
+  {% endif %}
+</div>
+
+<div class="card">
+  <h3>Acciones de sorteo</h3>
+
+  <form method="post"
+        action="{{ url_for('admin_draw') }}"
+        style="display:inline;">
+
+    <input type="hidden" name="key" value="{{ ADMIN_KEY }}">
+
+    <button class="btn btn-secondary"
+            type="submit"
+            onclick="return confirm('Esto sobrescribe cualquier sorteo previo. ¿Continuar?');">
+      Generar / Regenerar sorteo
+    </button>
+  </form>
+
+  <form method="post"
+        action="{{ url_for('admin_send') }}"
+        style="display:inline; margin-left:10px;">
+
+    <input type="hidden" name="key" value="{{ ADMIN_KEY }}">
+
+    <button class="btn btn-primary"
+            type="submit"
+            onclick="return confirm('Enviar links por email a todos los participantes?');">
+      Enviar emails
+    </button>
+  </form>
+</div>
+
+{% endblock %}
