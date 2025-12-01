@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>🎁 Amigo Invisible</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f5f6fa;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 520px;
+            margin: 40px auto;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        h2 {
+            text-align: center;
+            margin-top: 5px;
+            color: #e53935;
+        }
+        .sub {
+            text-align: center;
+            color: #555;
+            margin-bottom: 30px;
+        }
+        .section {
+            margin-top: 30px;
+            border-top: 1px solid #eee;
+            padding-top: 25px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+        button {
+            width: 100%;
+            background: #4CAF50;
+            color: white;
+            padding: 14px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #43a047;
+        }
+        .flash {
+            margin-bottom: 15px;
+            padding: 12px;
+            border-radius: 6px;
+            background: #e8f5e9;
+            color: #2e7d32;
+            font-weight: bold;
+            text-align: center;
+        }
+        .hint {
+            font-size: 12px;
+            color: #777;
+            margin-top: 8px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, msg in messages %}
+          <div class="flash">{{ msg }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <h1>🎄 Amigo Invisible 🎄</h1>
+
+    <p class="sub">
+        Te toca regalarle a:
+    </p>
+
+    <h2>{{ receiver_name }}</h2>
+
+    <div class="section">
+        <h3>🎁 Tus preferencias</h3>
+
+        <p class="hint">
+            Esta información es opcional y solo la verá quien te regale.
+        </p>
+
+        <form method="post">
+
+            <label>Color favorito</label>
+            <input type="text" name="favorite_color"
+                   value="{{ wishlist.favorite_color or '' }}"
+                   placeholder="Ej: Azul, negro, verde">
+
+            <label>Talle de remera</label>
+            <input type="text" name="shirt_size"
+                   value="{{ wishlist.shirt_size or '' }}"
+                   placeholder="Ej: S, M, L, XL">
+
+            <label>Talle de pantalón</label>
+            <input type="text" name="pants_size"
+                   value="{{ wishlist.pants_size or '' }}"
+                   placeholder="Ej: 40, 42, 44">
+
+            <label>Talle de zapatillas / calzado</label>
+            <input type="text" name="shoe_size"
+                   value="{{ wishlist.shoe_size or '' }}"
+                   placeholder="Ej: 40, 41, 42">
+
+            <label>Ideas / gustos</label>
+            <textarea name="gift_notes"
+                      placeholder="Ej: Me gusta el café, cosas útiles para la oficina, libros, etc.">{{ wishlist.gift_notes or '' }}</textarea>
+
+            <button type="submit">Guardar mis preferencias</button>
+        </form>
+    </div>
+
+    <p class="hint">
+        🎅 Podés volver a este enlace las veces que quieras y editar tus datos.
+    </p>
+
+</div>
+
+</body>
+</html>
