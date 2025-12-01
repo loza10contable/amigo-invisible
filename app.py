@@ -32,7 +32,7 @@ DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///amigo_invisible.db")
 GMAIL_USER = os.getenv("GMAIL_USER")
 GMAIL_PASSWORD = os.getenv("GMAIL_PASSWORD")
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder="templates")
 app.secret_key = os.getenv("FLASK_SECRET_KEY", "super_secret_key")
 
 # =========================
@@ -324,4 +324,5 @@ def index():
 
 if __name__ == "__main__":
     app.run()
+
 
