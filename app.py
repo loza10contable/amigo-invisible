@@ -208,7 +208,7 @@ def admin_panel():
     return render_template(
         "admin.html",
         participants=participants,
-        assign_map=assign_map
+        assign_map=assign_map,
         ADMIN_KEY=ADMIN_KEY   # ← AGREGAR
     )
 
@@ -315,4 +315,5 @@ def index():
 
 if __name__ == "__main__":
     app.run()
+
 
