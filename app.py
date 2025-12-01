@@ -209,6 +209,7 @@ def admin_panel():
         "admin.html",
         participants=participants,
         assign_map=assign_map
+        ADMIN_KEY=ADMIN_KEY   # ← AGREGAR
     )
 
 
@@ -314,3 +315,4 @@ def index():
 
 if __name__ == "__main__":
     app.run()
+
