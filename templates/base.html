@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>{% block title %}Amigo Invisible{% endblock %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { font-family: Arial, sans-serif; background:#f0f2f5; margin:0; }
+    header { background:#1e88e5; color:white; padding:10px 20px; }
+    main { padding:20px; max-width:900px; margin:auto; }
+    .card { background:white; padding:20px; border-radius:8px; box-shadow:0 1px 3px rgba(0,0,0,0.1); margin-bottom:20px; }
+    .btn { display:inline-block; padding:8px 14px; border-radius:6px; text-decoration:none; font-size:14px; border:none; cursor:pointer; }
+    .btn-primary { background:#1e88e5; color:white; }
+    .btn-danger { background:#e53935; color:white; }
+    .btn-secondary { background:#757575; color:white; }
+    table { width:100%; border-collapse:collapse; margin-top:10px; }
+    th, td { border-bottom:1px solid #ddd; padding:6px 8px; text-align:left; }
+    .flash-success { color:#2e7d32; margin-bottom:10px; }
+    .flash-error { color:#c62828; margin-bottom:10px; }
+  </style>
+</head>
+<body>
+<header>
+  <h2>🎄 Amigo Invisible - Panel</h2>
+</header>
+<main>
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, msg in messages %}
+        <div class="flash-{{category}}">{{ msg }}</div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+  {% block content %}{% endblock %}
+</main>
+</body>
+</html>
